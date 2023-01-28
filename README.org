@@ -1,0 +1,78 @@
+#+title: HKTCPTSD: Hackabe TCP to Shell Daemon
+
+* What does it do?
+It takes a scring gathered prom a TCP protocol, and sends it to a shell script or any other program locally installed in the server computer through a environment variable
+It is a hobby project of mine, it in no way anything special. I wrote this while learning rust. Some good dev could probably write this in 5 minutes.
+
+All the child processes are killed if this program is shut down. *it is not a bug, It is a Security Feature*
+
+* How to get a binary
+you just use this command to get a properly optimized binary
+
+#+begin_src bash
+  cargo build --release
+#+end_src
+
+* Some Documentation
+As I am lazy to manage arguments, I would have had to use an external crate to handle arguments, which is bloat so straight up didn't implement command line argument
+
+The help page is printed on stdout rignt after launching the daemon, but I'll copy paste that here for convinence ( I probably misspelled that word but I don't care )
+
+#+begin_example
+This is the Help Page
+Environment variables:
+ADRESS: for your adress default: 127.0.0.1:6969
+MAX_PROCESS: number of threads default 8
+edit /home/light/.config/hktcptsd/processes to set your processes
+#+end_example
+
+You set the environmet variables *HKTCPTSD_ADRESS* for the adress to listen to and *HKTCPTSD_MAX_PROCESS* to specify the max number of threads according to your needs
+Here light is my username, you can instead use *$HOME* instead
+
+there is another environment variable, *HKTCPTSD_PASS*, you set password with this environment variable. if not set the default is /rootadmin/
+
+** Syntax of $HOME/hktcptsd/processes
+
+#+begin_example
+  (process_id location_of_the_sctipt)
+#+end_example
+
+I have currently set this to
+#+begin_example
+(5 /home/light/test.sh)
+(1 /home/light/.qolscripts/tompv.sh)
+#+end_example
+
+and the best thing about this is this can be edited real time while the server is running. so if you want a new feature, you can just write in the process file
+
+
+*NOTE* The process file must contain only one space per line, and only one entry per line. this is because the file is first split into lines, then spaces while parsing, and the small brackets are ignored. So don't try to do funny stuff. You can see that you did something up in the debug log that is written in stdout
+
+* HKTCPTSD protocol
+** How to write clients
+so, if you wanna write a client for this, you must use the protocol of this daemon
+
+the client must send a text in the following way 
+
+#+begin_example
+password\n
+id_of_script_defined_in_process_file\n
+string_to_be_passed\n
+#+end_example
+anything after the third line will be ignored
+
+** How to write scripts
+The string you pass via the client to the server is passed to your script through the environment variable *STRING_VALUE*
+
+here is an example of a script that uses the environment variable
+#+begin_src bash
+#!/bin/bash
+notify-send "Got the thing" "$STRING_VALUE"
+#+end_src
+
+as you can see, the envoronment variable  *STRING_VALUE* is used
+
+* TODO
+- add a proper encryption
+- add command line arguments
+- get a girlfriend

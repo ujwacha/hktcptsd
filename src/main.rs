@@ -1,8 +1,11 @@
 use hktcptsd::get_addr_thread;
+use hktcptsd::print_help;
 use hktcptsd::{connection_handler, ThreadPool};
 use std::net::TcpListener;
 
 fn main() {
+    print_help();
+
     let (adress, no_of_threads) = get_addr_thread();
 
     let listener = match TcpListener::bind(adress) {

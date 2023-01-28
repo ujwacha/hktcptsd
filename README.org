@@ -72,7 +72,7 @@ notify-send "Got the thing" "$STRING_VALUE"
 
 as you can see, the envoronment variable  *STRING_VALUE* is used
 
-* TODO
+* Future TODO
 - add a proper encryption
 - add command line arguments
 - get a girlfriend

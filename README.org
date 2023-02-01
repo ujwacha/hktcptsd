@@ -31,7 +31,7 @@ Here light is my username, you can instead use *$HOME* instead
 
 there is another environment variable, *HKTCPTSD_PASS*, you set password with this environment variable. if not set the default is /rootadmin/
 
-** Syntax of $HOME/hktcptsd/processes
+** Syntax of $HOME/.config/hktcptsd/processes
 
 #+begin_example
   (process_id location_of_the_sctipt)

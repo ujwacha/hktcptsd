@@ -70,7 +70,7 @@ here is an example of a script that uses the environment variable
 notify-send "Got the thing" "$STRING_VALUE"
 #+end_src
 
-as you can see, the envoronment variable  *STRING_VALUE* is used
+as you can see, the envoronment variable  *STRING_VALUE* is used. 
 
 * Future TODO
 - add a proper encryption
